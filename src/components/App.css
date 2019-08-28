@@ -3,3 +3,16 @@ body {
     background-position: center;
     background-size: cover;
 }
+
+.align-link {
+    margin-left: 7px;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.color-white{
+    color: white;
+}
+

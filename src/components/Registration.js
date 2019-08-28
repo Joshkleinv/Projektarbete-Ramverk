@@ -1,5 +1,6 @@
 import React from 'react';
 import './Registration.css'
+import './App.css';
 import { Link } from "react-router-dom";
 import { Container, Divider, Form, Select, Header } from "semantic-ui-react";
 
@@ -21,12 +22,12 @@ class Registration extends React.Component {
 
         return (
             <Container>
-                <Form widths='equal'>
+                <Form>
                     <Header as="h2">
                         Create new account
                     </Header>
                     <Divider />
-                    <Form.Group>
+                    <Form.Group widths='equal'>
                         <Form.Input
                             required
                             label="First Name"
@@ -34,7 +35,7 @@ class Registration extends React.Component {
                             name="firstName"
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group widths='equal'>
                         <Form.Input
                             required
                             label="Last Name"
@@ -42,7 +43,7 @@ class Registration extends React.Component {
                             name="lastName"
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group widths='equal'>
                         <Form.Input
                             required
                             className="white-text"
@@ -58,7 +59,7 @@ class Registration extends React.Component {
                             placeholder='Gender'
                         />
                     </Form.Group>
-                    <Form.Group>
+                    <Form.Group widths='equal'>
                         <Form.Input
                             required
                             label="Password"
@@ -73,17 +74,17 @@ class Registration extends React.Component {
                         />
                     </Form.Group>
                     <Form.Group>
-                        <Form.Button
-                            color='green'
-                            content='Submit'
-                            type="submit"
-                        />
-                        <Link to="/">
+                        <Link to="/" className="align-link">
                             <Form.Button
                                 color='red'
                                 content="Cancel"
                             />
                         </Link>
+                        <Form.Button
+                            color='green'
+                            content='Submit'
+                            type="submit"
+                        />
                     </Form.Group>
                 </Form>
             </Container>
