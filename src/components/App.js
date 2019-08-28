@@ -1,11 +1,14 @@
 import React from 'react';
 import './App.css';
+import { BrowserRouter } from "react-router-dom"
+import { Home } from "./Home";
 
-function App() {
+export const App = () => {
   return (
-    <div>
-    </div>
+      <BrowserRouter>
+        <div>
+            <Home />
+        </div>
+      </BrowserRouter>
   );
-}
-
-export default App;
+};
