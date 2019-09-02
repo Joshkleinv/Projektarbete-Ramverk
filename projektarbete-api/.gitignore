@@ -1,8 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
-./projektarbete-api/node_modules
-./projektarbete-api/.idea
 /node_modules
 /.pnp
 .pnp.js
