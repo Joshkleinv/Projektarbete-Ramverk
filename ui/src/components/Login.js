@@ -1,10 +1,10 @@
 import React from 'react'
 import { Link } from "react-router-dom";
+import axios from "axios";
 import './Login.css';
 import './App.css';
 import {Container, Divider, Form, Header} from "semantic-ui-react";
-import axios from "axios";
-
+import { setToken } from "../services/auth";
 
 class Login extends React.Component{
     state = {
@@ -22,8 +22,8 @@ class Login extends React.Component{
                     password: this.state.password
                 }
             }).then((result) => {
-                if (result && result.data) {
-                    alert('logged in');
+                if (result && result.data && result.data.signedJWT) {
+                    setToken(result.data.signedJWT);
                     this.props.history.replace('/')
                 }
             })

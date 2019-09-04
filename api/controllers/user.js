@@ -2,6 +2,20 @@ const userModel = require('../models/user');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
+const jwtSecret = 'asimplesecret';
+function createJWT(user) {
+    return jwt.sign({ id: user.id }, jwtSecret);
+}
+
+const verifyJWT = token => {
+    new Promise((resolve, reject) => {
+        jwt.verify(token, jwtSecret, (err, payload) => {
+            if (err) return reject(err);
+            resolve(payload)
+        })
+    });
+};
+
 const register = (req, res, next) => {
     userModel.create({
         firstName: req.body.firstName,
@@ -24,12 +38,28 @@ const login = async (req, res) => {
     const checkPassword = await user.checkPassword(req.body.password);
     if (!checkPassword) {
         return res.status(400).send({ message: 'invalid password' })
+    } else {
+        const signedJWT = createJWT(user);
+        return res.status(200).send({ signedJWT })
     }
-    return res.status(200).send({ message: 'Successefully signed in'})
 };
 
-const isAuthorized = () => {
+const isAuthorized = async (req, res, next) => {
+    const token = req.headers.authorization;
+    let payload;
 
+    try {
+        payload = await verifyJWT(token);
+    } catch (e) {
+        return res.status(500).end();
+    }
+
+    const user = await User.findById(payload.id).exec();
+    if (!user) {
+        return res.status(500).end();
+    }
+    req.user = user;
+    next();
 };
 
 module.exports = {

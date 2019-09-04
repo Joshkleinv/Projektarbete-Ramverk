@@ -1,15 +1,24 @@
 import React from 'react';
-import { Route } from 'react-router-dom'
 import { News } from './News'
-import { Test } from './Test'
 import './App.css'
+import { isAuthorized, getToken } from "../services/auth";
 
 
-export const App = () => {
-  return (
-    <div>
-      <Navbar />
-      <News />
-    </div>
-  );
-};
+class App extends React.Component {
+    componentDidMount() {
+        if (!isAuthorized()) {
+            this.props.history.replace('/home')
+        }
+    }
+
+    render() {
+        return (
+            <div>
+                <News />
+
+            </div>
+        );
+    }
+}
+
+export default App;
