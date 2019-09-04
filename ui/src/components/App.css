@@ -15,4 +15,10 @@ body {
 .color-white{
     color: white;
 }
+h1{
+    text-align: center;
+    color: white;
+    font-size: 30px
+
+}
 

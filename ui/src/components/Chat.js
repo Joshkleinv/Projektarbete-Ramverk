@@ -1,9 +1,8 @@
 import React from 'react';
-import './App.css'
+import './Chat.css'
 import { Button } from 'semantic-ui-react';
 
-
-export const App = () => {
+export const Chat = () => {
   return (
       <div>
         <h1>Welcome!</h1>
