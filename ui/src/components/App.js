@@ -1,9 +1,7 @@
 import React from 'react';
-import { News } from './News'
-import Navbar from './Navbar'
+import { News } from './News/News'
 import './App.css'
-import { isAuthorized, getToken } from "../services/auth";
-
+import {isAuthorized} from "../services/auth";
 
 class App extends React.Component {
     componentDidMount() {
@@ -14,11 +12,7 @@ class App extends React.Component {
 
     render() {
         return (
-            <div>
-                <Navbar />
-                <News />
-
-            </div>
+            <News />
         );
     }
 }

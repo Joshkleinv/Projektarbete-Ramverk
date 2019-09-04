@@ -1,15 +1,15 @@
 import React from 'react';
-import './Home.css';
-import './App.css';
 import {Container, Button, Header } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-
+import './Home.css';
+import '../App.css';
 
 export const Home = () => {
     return (
-        <Container className="container">
-            <div className="align-center">
-                <Header as="h2">Welcome!</Header>
+        <div className="leaf-bg">
+        <Container>
+            <div className="align-center pt-2">
+                <Header className="color-white" as="h2">Welcome!</Header>
                 <p className="color-white">Please choose if you would like to sign up or login.</p>
                 <Link to="/login">
                     <Button size='large' color='green'>Login</Button>
@@ -19,5 +19,6 @@ export const Home = () => {
                 </Link>
             </div>
         </Container>
+        </div>
     )
 };

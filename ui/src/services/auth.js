@@ -10,7 +10,6 @@ export const isAuthorized = () => {
   return !!getToken()
 };
 
-export const logut = () => {
+export const logout = () => {
     localStorage.removeItem('auth_token')
 };
-

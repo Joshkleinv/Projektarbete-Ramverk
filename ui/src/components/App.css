@@ -1,7 +1,22 @@
-body {
+.container-dark {
+    padding: 2em;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container-transparent {
+    padding: 2em;
+}
+
+.leaf-bg {
+    height: 100vh;
+    width: 100vw;
     background-image: url("../assets/images/natureleafs.jpg");
     background-position: center;
     background-size: cover;
+}
+
+.pt-2 {
+    padding-top: 2em
 }
 
 .align-link {
@@ -13,12 +28,26 @@ body {
 }
 
 .color-white{
+    color: white !important;
+}
+
+.ui .form .field > label {
     color: white;
 }
-h1{
-    text-align: center;
-    color: white;
-    font-size: 30px
 
+@media (min-width: 768px) {
+
+}
+
+@media (min-width: 1200px) {
+    .container-dark {
+        margin: 0 auto 0 auto !important;
+        width: 50% !important;
+    }
+
+    .container-transparent {
+        margin: 0 auto 0 auto !important;
+        width: 50% !important;
+    }
 }
 
