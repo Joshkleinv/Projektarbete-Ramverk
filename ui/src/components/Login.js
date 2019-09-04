@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import './Login.css';
 import './App.css';
 import {Container, Divider, Form, Header} from "semantic-ui-react";
+import axios from "axios";
 
 
 class Login extends React.Component{
@@ -11,10 +12,31 @@ class Login extends React.Component{
         password: ''
     };
 
+    handleSubmit(event) {
+        event.preventDefault();
+            axios({
+                method: 'post',
+                url: 'http://localhost:4000/login',
+                data: {
+                    emailAddress: this.state.emailAddress,
+                    password: this.state.password
+                }
+            }).then((result) => {
+                if (result && result.data) {
+                    alert('logged in');
+                    this.props.history.replace('/')
+                }
+            })
+    }
+
+    handleOnChange = event => {
+        this.setState({[event.target.name]: event.target.value})
+    };
+
     render(){
         return (
             <Container>
-                <Form>
+                <Form onSubmit={event => this.handleSubmit(event)}>
                     <Header as="h2">
                     Login
                     </Header>
@@ -25,12 +47,16 @@ class Login extends React.Component{
                             placeholder="Email Address"
                             name="emailAddress"
                             type="email"
+                            value={this.state.emailAddress}
+                            onChange={this.handleOnChange}
                         />
                         <Form.Input
                             label="Password"
                             placeholder="Password"
                             name="password"
                             type="password"
+                            value={this.state.password}
+                            onChange={this.handleOnChange}
                         />
                     </Form.Group>
                     <Form.Group>

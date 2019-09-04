@@ -1,8 +1,9 @@
 import React from 'react';
+import axios from 'axios';
+import { Link } from "react-router-dom";
+import { Container, Divider, Form, Header } from "semantic-ui-react";
 import './Registration.css'
 import './App.css';
-import { Link } from "react-router-dom";
-import { Container, Divider, Form, Select, Header } from "semantic-ui-react";
 
 class Registration extends React.Component {
     state = {
@@ -13,16 +14,36 @@ class Registration extends React.Component {
         passwordConfirmation: ''
     };
 
-    render() {
-        const options = [
-            { key: 'm', text: 'Male', value: 'male' },
-            { key: 'f', text: 'Female', value: 'female' },
-            { key: 'o', text: 'Other', value: 'other' },
-        ];
+    handleSubmit(event) {
+        event.preventDefault();
+        if (this.state.password === this.state.passwordConfirmation) {
+            axios({
+                method: 'post',
+                url: 'http://localhost:4000/register',
+                data: {
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    emailAddress: this.state.emailAddress,
+                    password: this.state.password
+                }
+            }).then((result) => {
+                if (result && result.data) {
+                    this.props.history.replace('/')
+                }
+            })
+        } else {
+            alert('Password is not identical.')
+        }
+    }
 
+    handleOnChange = event => {
+        this.setState({[event.target.name]: event.target.value})
+    };
+
+    render() {
         return (
             <Container>
-                <Form>
+                <Form onSubmit={event => this.handleSubmit(event)}>
                     <Header as="h2">
                         Create new account
                     </Header>
@@ -33,6 +54,8 @@ class Registration extends React.Component {
                             label="First Name"
                             placeholder="First Name"
                             name="firstName"
+                            value={this.state.firstName}
+                            onChange={this.handleOnChange}
                         />
                     </Form.Group>
                     <Form.Group widths='equal'>
@@ -41,6 +64,8 @@ class Registration extends React.Component {
                             label="Last Name"
                             placeholder="Last Name"
                             name="lastName"
+                            value={this.state.lastName}
+                            onChange={this.handleOnChange}
                         />
                     </Form.Group>
                     <Form.Group widths='equal'>
@@ -51,12 +76,8 @@ class Registration extends React.Component {
                             placeholder="Email Address"
                             name="emailAddress"
                             type="email"
-                        />
-                        <Form.Field
-                            control={Select}
-                            label='Gender'
-                            options={options}
-                            placeholder='Gender'
+                            value={this.state.emailAddress}
+                            onChange={this.handleOnChange}
                         />
                     </Form.Group>
                     <Form.Group widths='equal'>
@@ -65,12 +86,16 @@ class Registration extends React.Component {
                             label="Password"
                             name="password"
                             type="password"
+                            value={this.state.password}
+                            onChange={this.handleOnChange}
                         />
                         <Form.Input
                             required
                             label="Confirm Password"
                             name="passwordConfirmation"
                             type="password"
+                            value={this.state.passwordConfirmation}
+                            onChange={this.handleOnChange}
                         />
                     </Form.Group>
                     <Form.Group>
