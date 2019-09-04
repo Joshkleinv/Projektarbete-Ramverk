@@ -37,11 +37,13 @@ userSchema.pre('save', function(next) {
     })
 });
 
-userSchema.methods.checkPassword = function(candidatePassword, checkPassword) {
-  bcrypt.compare(candidatePassword, this.password, function (err, isMatching) {
-      if (err) return checkPassword(err);
-      checkPassword(null, isMatching)
-  })
+userSchema.methods.checkPassword = function(candidatePassword) {
+    return new Promise(((resolve, reject) => {
+        bcrypt.compare(candidatePassword, this.password, (err, isMatching) => {
+            if (err) return reject(err);
+            resolve(isMatching)
+        })
+    }))
 };
 
 module.exports = mongoose.model('regUser', userSchema);
