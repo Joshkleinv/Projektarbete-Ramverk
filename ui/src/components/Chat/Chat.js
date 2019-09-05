@@ -18,13 +18,31 @@ class Chat extends React.Component {
 
         this.sendMessage = event => {
             event.preventDefault();
+
+            axios({
+                method: 'post',
+                url: 'http://localhost:4000/messages',
+                data: {
+                    author: this.state.name,
+                    message: this.state.message,
+                    date: convertDate()
+                }
+            }).then(result => {
+                console.log(result)
+            });
+
             this.socket.emit('SEND_MESSAGE', {
-                author: 'hardCodedUseName',
+                author: this.state.name,
                 message: this.state.message,
                 date: convertDate()
             });
             this.setState({message: ''})
         };
+
+        this.socket = io('localhost:4000');
+        this.socket.on('RECEIVE_MESSAGE', (data) => {
+            addMessage(data);
+        });
 
         const addMessage = (data) => {
             this.setState({ messages: [...this.state.messages, data]});
@@ -32,17 +50,22 @@ class Chat extends React.Component {
 
         const convertDate = () => {
             let current_datetime = new Date();
-            return current_datetime.getFullYear() + "-" + (current_datetime.getMonth() + 1) + "-" + current_datetime.getDate() + " " + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds();
+            return current_datetime.getFullYear()
+                + "-" + (current_datetime.getMonth() + 1)
+                + "-" + current_datetime.getDate()
+                + " " + current_datetime.getHours()
+                + ":" + current_datetime.getMinutes()
+                + ":" + current_datetime.getSeconds();
         };
-
-        this.socket = io('localhost:4000');
-        this.socket.on('RECEIVE_MESSAGE', (data) => {
-            addMessage(data);
-        });
     }
 
     componentDidMount() {
-
+        axios.get('http://localhost:4000/messages')
+            .then(res => {
+                for (let i = 0; i < res.data.length; i++) {
+                    this.setState({ messages: [...this.state.messages, res.data[i]]});
+                }
+            })
     }
 
     render() {
@@ -57,7 +80,7 @@ class Chat extends React.Component {
                     <div>
                         {this.state.messages.map(message => {
                             return (
-                                <Comment key={message.date}>
+                                <Comment key={message.id}>
                                     <Comment.Content>
                                         <Comment.Author as='a'>{message.author}</Comment.Author>
                                         <Comment.Metadata>

@@ -23,9 +23,8 @@ const register = (req, res, next) => {
         password: req.body.password
     }, function (err, result) {
         if (err)
-            next(err);
-        else
-            res.json({status: "success", message: "User registered.", data: null});
+            res.sendStatus(500);
+        res.sendStatus(200)
     });
 };
 
