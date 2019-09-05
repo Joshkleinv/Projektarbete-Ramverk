@@ -61,14 +61,9 @@ const isAuthorized = async (req, res, next) => {
     next();
 };
 
-const getName = async (req, res ) => {
-    const user = await userModel.find({ email: req.query.emailAddress }).exec();
-    await res.send(user)
-};
 
 module.exports = {
     register: register,
     login: login,
-    isAuthorized: isAuthorized,
-    getName: getName
+    isAuthorized: isAuthorized
 };

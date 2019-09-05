@@ -27,9 +27,7 @@ class Chat extends React.Component {
         };
 
         const addMessage = (data) => {
-            console.log(data);
             this.setState({ messages: [...this.state.messages, data]});
-            console.log(this.state.messages);
         };
 
         const convertDate = () => {
@@ -59,7 +57,7 @@ class Chat extends React.Component {
                     <div>
                         {this.state.messages.map(message => {
                             return (
-                                <Comment key={message.time}>
+                                <Comment key={message.date}>
                                     <Comment.Content>
                                         <Comment.Author as='a'>{message.author}</Comment.Author>
                                         <Comment.Metadata>
