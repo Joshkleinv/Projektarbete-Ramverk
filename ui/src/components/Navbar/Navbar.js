@@ -1,7 +1,7 @@
 import React from 'react';
 import { Menu } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import { logout } from '../../services/auth'
+import { logout } from '../../services/Auth'
 import './Navbar.css'
 
 class Navbar extends React.Component {
@@ -9,6 +9,7 @@ class Navbar extends React.Component {
 
     handleLogout = () => {
         logout();
+        window.location.reload();
     };
 
     render() {

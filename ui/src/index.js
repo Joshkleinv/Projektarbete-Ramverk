@@ -5,6 +5,7 @@ import { Route } from "react-router-dom"
 import { configureStore } from "./redux_setup/configureStore";
 import { Provider } from "react-redux";
 
+import { PrivateRoute } from "./services/PrivateRoute";
 import App from './components/App';
 import Login from "./components/Login/Login";
 import Friends from "./components/Friends/Friends";
@@ -17,9 +18,9 @@ const store = configureStore();
 ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
-            <Route exact path="/" component={App}/>
-            <Route path="/chat" component={Chat}/>
-            <Route path="/friends" component={Friends}/>
+            <PrivateRoute exact path="/" component={App}/>
+            <PrivateRoute path="/chat" component={Chat}/>
+            <PrivateRoute path="/friends" component={Friends}/>
             <Route path="/home" component={Home}/>
             <Route path="/registration" component={Registration}/>
             <Route path="/login" component={Login} />

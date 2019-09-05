@@ -4,7 +4,7 @@ import axios from "axios";
 import {Container, Divider, Form, Header} from "semantic-ui-react";
 import './Login.css';
 import '../App.css';
-import { setToken } from "../../services/auth";
+import { setToken } from "../../services/Auth";
 
 class Login extends React.Component{
     state = {
