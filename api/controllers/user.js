@@ -1,5 +1,4 @@
 const userModel = require('../models/user');
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const jwtSecret = 'asimplesecret';
@@ -54,7 +53,7 @@ const isAuthorized = async (req, res, next) => {
         return res.status(500).end();
     }
 
-    const user = await User.findById(payload.id).exec();
+    const user = await userModel.findById(payload.id).exec();
     if (!user) {
         return res.status(500).end();
     }
@@ -62,8 +61,14 @@ const isAuthorized = async (req, res, next) => {
     next();
 };
 
+const getName = async (req, res ) => {
+    const user = await userModel.find({ email: req.query.emailAddress }).exec();
+    await res.send(user)
+};
+
 module.exports = {
     register: register,
     login: login,
-    isAuthorized: isAuthorized
+    isAuthorized: isAuthorized,
+    getName: getName
 };

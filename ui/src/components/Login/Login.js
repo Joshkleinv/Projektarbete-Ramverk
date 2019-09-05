@@ -5,6 +5,7 @@ import {Container, Divider, Form, Header} from "semantic-ui-react";
 import './Login.css';
 import '../App.css';
 import { setToken } from "../../services/Auth";
+import { setEmailAddress } from "../../services/Auth";
 
 class Login extends React.Component{
     state = {
@@ -26,7 +27,8 @@ class Login extends React.Component{
                     setToken(result.data.signedJWT);
                     this.props.history.replace('/')
                 }
-            })
+            });
+            setEmailAddress(this.state.emailAddress);
     }
 
     handleOnChange = event => {

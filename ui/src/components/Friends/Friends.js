@@ -5,9 +5,9 @@ import Navbar from "../Navbar/Navbar";
 class Friends extends React.Component {
     render() {
         return (
-            <div>
+            <React.Fragment>
                 <Navbar />
-            </div>
+            </React.Fragment>
         )
     }
 }
