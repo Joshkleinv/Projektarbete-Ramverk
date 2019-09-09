@@ -4,7 +4,7 @@ import axios from 'axios';
 import {Button, Comment, Container, Form, Header, Input} from 'semantic-ui-react';
 import './Chat.css'
 import Navbar from "../Navbar/Navbar";
-import { getEmailAddress } from "../../services/Auth";
+import {getEmailAddress} from "../../services/Auth";
 
 class Chat extends React.Component {
     constructor(props) {
@@ -89,6 +89,10 @@ class Chat extends React.Component {
             })
     }
 
+    dateToDisplay(date) {
+        return date.slice(0, 14);
+    }
+
     render() {
         return (
             <React.Fragment>
@@ -105,7 +109,7 @@ class Chat extends React.Component {
                                     <Comment.Content>
                                         <Comment.Author as='a'>{message.author}</Comment.Author>
                                         <Comment.Metadata>
-                                            <div>{message.date}</div>
+                                            <div>{this.dateToDisplay(message.date)}</div>
                                         </Comment.Metadata>
                                         <Comment.Text>{message.message}</Comment.Text>
                                     </Comment.Content>

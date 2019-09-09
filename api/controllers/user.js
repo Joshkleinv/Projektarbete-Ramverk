@@ -29,7 +29,7 @@ const register = (req, res, next) => {
 };
 
 const login = async (req, res) => {
-    const user = await userModel.findOne({ email: req.body.emailAdress }).exec();
+    const user = await userModel.findOne({ emailAddress: req.body.emailAddress }).exec();
     if (!user) {
         return res.status(400).send({ message: 'No emailadress found'})
     }
