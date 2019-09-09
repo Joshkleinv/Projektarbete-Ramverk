@@ -60,9 +60,23 @@ const isAuthorized = async (req, res, next) => {
     next();
 };
 
+const getUser = (req, res ) => {
+    userModel.findOne({ emailAddress: req.query.email }, (err, user) => {
+        if (err) {
+            res.sendStatus(500);
+        } else {
+            res.send({
+                firstName: user.firstName,
+                lastName: user.lastName
+            });
+        }
+    })
+};
+
 
 module.exports = {
     register: register,
     login: login,
-    isAuthorized: isAuthorized
+    isAuthorized: isAuthorized,
+    getUser: getUser
 };

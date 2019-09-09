@@ -12,7 +12,7 @@ export const News = () => {
         <Feed.Event>
           <Feed.Content>
             <Feed.Summary>
-              <a>Joe Henderson</a> posted on his page
+              Joe Henderson posted on his page
               <Feed.Date>3 days ago</Feed.Date>
             </Feed.Summary>
             <Feed.Extra text>

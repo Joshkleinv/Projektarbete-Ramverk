@@ -21,13 +21,7 @@ const getMessages = (req, res) => {
   })
 };
 
-const getName = async (req, res ) => {
-    const user = await userModel.find({ email: req.query.emailAddress }).exec();
-    await res.send(user)
-};
-
 module.exports = {
     saveMessages: saveMessages,
-    getMessages: getMessages,
-    getName: getName
+    getMessages: getMessages
 };

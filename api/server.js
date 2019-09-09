@@ -6,7 +6,7 @@ const cors = require('cors');
 const socket = require('socket.io');
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
-const getName = require('./controllers/message').getName;
+const getUser = require('./controllers/user').getUser;
 const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
 const port = 4000;
@@ -23,8 +23,8 @@ mongoose.connect(mongoDB, {useNewUrlParser: true, useCreateIndex: true})
 app.post('/register', register);
 app.post('/login', login);
 app.post('/messages', saveMessages);
-app.get('/getName', getName);
 app.get('/messages', getMessages);
+app.get('/user', getUser);
 
 server = app.listen(port, function(){
     console.log(`Server is running on Port: ${port}`);
@@ -34,7 +34,6 @@ io = socket(server);
 
 io.on('connection', (socket) => {
     console.log(socket.id);
-
     socket.on('SEND_MESSAGE', (data) => {
         io.emit('RECEIVE_MESSAGE', data);
     })

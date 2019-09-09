@@ -29,6 +29,8 @@ class Chat extends React.Component {
                 }
             }).then(result => {
                 console.log(result)
+            }).catch(err => {
+              console.log(err)
             });
 
             this.socket.emit('SEND_MESSAGE', {
@@ -60,11 +62,29 @@ class Chat extends React.Component {
     }
 
     componentDidMount() {
+        this.getChatHistory();
+        this.setAuthorName();
+    }
+
+    getChatHistory() {
         axios.get('http://localhost:4000/messages')
             .then(res => {
                 for (let i = 0; i < res.data.length; i++) {
                     this.setState({ messages: [...this.state.messages, res.data[i]]});
                 }
+            })
+    }
+
+    setAuthorName() {
+        const emailAddress = getEmailAddress();
+        axios.get('http://localhost:4000/user', {
+            params: {
+                email: emailAddress
+            }
+        })
+            .then(res => {
+                const name = res.data.firstName + ' ' + res.data.lastName;
+                this.setState({ name: name })
             })
     }
 
@@ -77,10 +97,10 @@ class Chat extends React.Component {
                         <Header as='h3' dividing>
                             All chat
                         </Header>
-                    <div>
+                    <div className="chatWindow">
                         {this.state.messages.map(message => {
                             return (
-                                <Comment key={message.id}>
+                                <Comment key={message.date}>
                                     <Comment.Content>
                                         <Comment.Author as='a'>{message.author}</Comment.Author>
                                         <Comment.Metadata>
