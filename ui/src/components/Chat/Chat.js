@@ -57,7 +57,8 @@ class Chat extends React.Component {
                 + "-" + current_datetime.getDate()
                 + " " + current_datetime.getHours()
                 + ":" + current_datetime.getMinutes()
-                + ":" + current_datetime.getSeconds();
+                + ":" + current_datetime.getSeconds()
+                + ":" + current_datetime.getMilliseconds();
         };
     }
 

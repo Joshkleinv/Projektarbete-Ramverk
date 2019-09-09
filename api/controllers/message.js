@@ -1,4 +1,3 @@
-const userModel = require('../models/user');
 const messageModel = require('../models/message');
 
 const saveMessages = (req, res) => {
