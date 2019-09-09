@@ -11,12 +11,41 @@ class Registration extends React.Component {
         lastName: '',
         emailAddress: '',
         password: '',
-        passwordConfirmation: ''
+        passwordConfirmation: '',
+        nameError: false,
+        lastNameError: false,
+        emailError: false,
+        passwordError: false,
+        passwordConfirmationError: false,
     };
 
     handleSubmit(event) {
         event.preventDefault();
-        if (this.state.password === this.state.passwordConfirmation) {
+        let error = false;
+
+        if(this.state.emailAddress == ''){
+            this.setState({emailError: true});
+            error =  true;
+        }else{
+            this.setState({emailError: false});
+        }
+        
+        if(this.state.password.length < 8 ){
+            this.setState({passwordError: true});
+            error =  true;
+        }else{
+            this.setState({passwordError: false});
+        }
+        if(this.state.password != this.state.passwordConfirmation){
+            this.setState({passwordConfirmationError: true});
+            error =  true;
+        }else{
+            this.setState({passwordConfirmationError: false});
+        }
+        
+
+
+        if (!error) {
             axios({
                 method: 'post',
                 url: 'http://localhost:4000/register',
@@ -24,15 +53,13 @@ class Registration extends React.Component {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     emailAddress: this.state.emailAddress,
-                    password: this.state.password
+                    password: this.state.password,
                 }
             }).then((result) => {
                 if (result && result.data) {
                     this.props.history.replace('/')
                 }
             })
-        } else {
-            alert('Password is not identical.')
         }
     }
 
@@ -57,6 +84,7 @@ class Registration extends React.Component {
                                 name="firstName"
                                 value={this.state.firstName}
                                 onChange={this.handleOnChange}
+                                error={this.state.nameError}
                             />
                         </Form.Group>
                         <Form.Group widths='equal'>
@@ -67,6 +95,7 @@ class Registration extends React.Component {
                                 name="lastName"
                                 value={this.state.lastName}
                                 onChange={this.handleOnChange}
+                                error={this.state.lastNameError}
                             />
                         </Form.Group>
                         <Form.Group widths='equal'>
@@ -79,6 +108,7 @@ class Registration extends React.Component {
                                 type="email"
                                 value={this.state.emailAddress}
                                 onChange={this.handleOnChange}
+                                error={this.state.emailError}
                             />
                         </Form.Group>
                         <Form.Group widths='equal'>
@@ -87,16 +117,20 @@ class Registration extends React.Component {
                                 label="Password"
                                 name="password"
                                 type="password"
+                                placeholder="Password"
                                 value={this.state.password}
                                 onChange={this.handleOnChange}
+                                error={this.state.passwordError}
                             />
                             <Form.Input
                                 required
                                 label="Confirm Password"
                                 name="passwordConfirmation"
+                                placeholder="Confirm Password"
                                 type="password"
                                 value={this.state.passwordConfirmation}
                                 onChange={this.handleOnChange}
+                                error={this.state.passwordConfirmationError}
                             />
                         </Form.Group>
                         <Form.Group>
@@ -110,6 +144,13 @@ class Registration extends React.Component {
                                 color='green'
                                 content='Submit'
                                 type="submit"
+                                disabled={
+                                   !this.state.emailAddress
+                                || !this.state.firstName
+                                || !this.state.lastName
+                                || !this.state.password
+                                || !this.state.passwordConfirmation
+                                }
                             />
                         </Form.Group>
                     </Form>

@@ -27,6 +27,7 @@ class Login extends React.Component{
                     setToken(result.data.signedJWT);
                     this.props.history.replace('/')
                 }
+                else(console.log("wrong login"))
             });
             setEmailAddress(this.state.emailAddress);
     }
