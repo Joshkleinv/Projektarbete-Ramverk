@@ -10,6 +10,9 @@ const newsSchema = new mongoose.Schema(
         },
         subject: {
             type: String
+        },
+        date: {
+            type: String
         }
     },
     { timestamp: true }
