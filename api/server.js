@@ -7,6 +7,9 @@ const socket = require('socket.io');
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
 const getUser = require('./controllers/user').getUser;
+const validateRegistration = require('./validation/validation').validateRegistration;
+const validateLogin = require('./validation/validation').validateLogin;
+const validateMessage = require('./validation/validation').validateMessage;
 const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
 const port = 4000;
@@ -20,9 +23,9 @@ mongoose.connect(mongoDB, {useNewUrlParser: true, useCreateIndex: true})
     .then(() => console.log('MongoDB connected.'))
     .catch((err) => console.log('MongoDB connection error: ', err));
 
-app.post('/register', register);
-app.post('/login', login);
-app.post('/messages', saveMessages);
+app.post('/register', validateRegistration, register);
+app.post('/login', validateLogin, login);
+app.post('/messages', validateMessage, saveMessages);
 app.get('/messages', getMessages);
 app.get('/user', getUser);
 

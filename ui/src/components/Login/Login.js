@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from "react-router-dom";
 import axios from "axios";
-import {Container, Divider, Form, Header} from "semantic-ui-react";
+import {Container, Divider, Form, Header, Message } from "semantic-ui-react";
 import './Login.css';
 import '../App.css';
 import { setToken } from "../../services/Auth";
@@ -10,10 +10,12 @@ import { setEmailAddress } from "../../services/Auth";
 class Login extends React.Component{
     state = {
         emailAddress: '',
-        password: ''
+        password: '',
+        errors: [],
     };
 
     handleSubmit(event) {
+        this.setState({ errors: [] })
         event.preventDefault();
             axios({
                 method: 'post',
@@ -27,7 +29,10 @@ class Login extends React.Component{
                     setToken(result.data.signedJWT);
                     this.props.history.replace('/')
                 }
-                else(console.log("wrong login"))
+            }).catch((err) => {
+                err.response.data.errors.forEach(error => {
+                    this.setState({ errors: [...this.state.errors, error]})
+                });
             });
             setEmailAddress(this.state.emailAddress);
     }
@@ -40,11 +45,19 @@ class Login extends React.Component{
         return (
             <div className="leaf-bg">
                 <Container className="pt-2">
-                    <Form className="container-dark" onSubmit={event => this.handleSubmit(event)}>
+                    <Form error className="container-dark" onSubmit={event => this.handleSubmit(event)}>
                         <Header className="color-white" as="h2">
                         Login
                         </Header>
                         <Divider />
+                        {this.state.errors.map(error => {
+                            return (
+                                <Message key={error.param}
+                                    error
+                                    header={error.msg}
+                                />
+                            )
+                        })}
                         <Form.Group widths='equal'>
                             <Form.Input
                                 label="Email Address"

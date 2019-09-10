@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { Link } from "react-router-dom";
-import { Container, Divider, Form, Header } from "semantic-ui-react";
+import { Container, Divider, Form, Header, Message } from "semantic-ui-react";
 import './Registration.css'
 import '../App.css';
 
@@ -12,40 +12,12 @@ class Registration extends React.Component {
         emailAddress: '',
         password: '',
         passwordConfirmation: '',
-        nameError: false,
-        lastNameError: false,
-        emailError: false,
-        passwordError: false,
-        passwordConfirmationError: false,
+        errors: []
     };
 
     handleSubmit(event) {
+        this.setState({ errors: [] })
         event.preventDefault();
-        let error = false;
-
-        if(this.state.emailAddress == ''){
-            this.setState({emailError: true});
-            error =  true;
-        }else{
-            this.setState({emailError: false});
-        }
-        
-        if(this.state.password.length < 8 ){
-            this.setState({passwordError: true});
-            error =  true;
-        }else{
-            this.setState({passwordError: false});
-        }
-        if(this.state.password != this.state.passwordConfirmation){
-            this.setState({passwordConfirmationError: true});
-            error =  true;
-        }else{
-            this.setState({passwordConfirmationError: false});
-        }
-        
-
-
-        if (!error) {
             axios({
                 method: 'post',
                 url: 'http://localhost:4000/register',
@@ -59,8 +31,12 @@ class Registration extends React.Component {
                 if (result && result.data) {
                     this.props.history.replace('/')
                 }
+            }).catch((err) => {
+                err.response.data.errors.forEach(error => {
+                    this.setState({ errors: [...this.state.errors, error]})
+                });
+                console.log(err.response.data);
             })
-        }
     }
 
     handleOnChange = event => {
@@ -71,11 +47,19 @@ class Registration extends React.Component {
         return (
             <div className="leaf-bg">
                 <Container className="pt-2">
-                    <Form className="container-dark" onSubmit={event => this.handleSubmit(event)}>
+                    <Form error className="container-dark" onSubmit={event => this.handleSubmit(event)}>
                         <Header className="color-white" as="h2">
                             Create new account
                         </Header>
                         <Divider />
+                        {this.state.errors.map(error => {
+                            return (
+                                <Message key={error.param}
+                                    error
+                                    header={error.msg}
+                                />
+                            )
+                        })}
                         <Form.Group widths='equal'>
                             <Form.Input
                                 required
@@ -101,7 +85,6 @@ class Registration extends React.Component {
                         <Form.Group widths='equal'>
                             <Form.Input
                                 required
-                                className="white-text"
                                 label="Email Address"
                                 placeholder="Email Address"
                                 name="emailAddress"
@@ -115,9 +98,9 @@ class Registration extends React.Component {
                             <Form.Input
                                 required
                                 label="Password"
+                                placeholder="Password"
                                 name="password"
                                 type="password"
-                                placeholder="Password"
                                 value={this.state.password}
                                 onChange={this.handleOnChange}
                                 error={this.state.passwordError}
@@ -144,13 +127,6 @@ class Registration extends React.Component {
                                 color='green'
                                 content='Submit'
                                 type="submit"
-                                disabled={
-                                   !this.state.emailAddress
-                                || !this.state.firstName
-                                || !this.state.lastName
-                                || !this.state.password
-                                || !this.state.passwordConfirmation
-                                }
                             />
                         </Form.Group>
                     </Form>

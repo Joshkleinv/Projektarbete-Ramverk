@@ -1,5 +1,6 @@
 const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
 
 const jwtSecret = 'asimplesecret';
 function createJWT(user) {
@@ -15,30 +16,42 @@ const verifyJWT = token => {
     });
 };
 
-const register = (req, res, next) => {
-    userModel.create({
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
-        emailAddress: req.body.emailAddress,
-        password: req.body.password
-    }, function (err, result) {
-        if (err)
-            res.sendStatus(500);
-        res.sendStatus(200)
-    });
+const register = (req, res) => {
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
+    } else {
+        userModel.create({
+            firstName: req.body.firstName,
+            lastName: req.body.lastName,
+            emailAddress: req.body.emailAddress,
+            password: req.body.password
+        }, function (err) {
+            if (err)
+                res.sendStatus(500);
+            res.sendStatus(200)
+        })
+    }
 };
 
 const login = async (req, res) => {
-    const user = await userModel.findOne({ emailAddress: req.body.emailAddress }).exec();
-    if (!user) {
-        return res.status(400).send({ message: 'No emailadress found'})
-    }
-    const checkPassword = await user.checkPassword(req.body.password);
-    if (!checkPassword) {
-        return res.status(400).send({ message: 'invalid password' })
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(422).json({ errors: errors.array() })
     } else {
-        const signedJWT = createJWT(user);
-        return res.status(200).send({ signedJWT })
+        const user = await userModel.findOne({ emailAddress: req.body.emailAddress }).exec();
+        if (!user) {
+            return res.status(400).send({ message: 'No emailadress found'})
+        }
+        const checkPassword = await user.checkPassword(req.body.password);
+        if (!checkPassword) {
+            return res.status(400).send({ message: 'invalid password' })
+        } else {
+            const signedJWT = createJWT(user);
+            return res.status(200).send({ signedJWT })
+        }
     }
 };
 
@@ -72,7 +85,6 @@ const getUser = (req, res ) => {
         }
     })
 };
-
 
 module.exports = {
     register: register,

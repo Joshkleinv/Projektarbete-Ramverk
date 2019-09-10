@@ -1,7 +1,7 @@
 import React from 'react';
 import io from "socket.io-client";
 import axios from 'axios';
-import {Button, Comment, Container, Form, Header, Input} from 'semantic-ui-react';
+import {Button, Comment, Container, Form, Header, Input, Message } from 'semantic-ui-react';
 import './Chat.css'
 import Navbar from "../Navbar/Navbar";
 import {getEmailAddress} from "../../services/Auth";
@@ -13,12 +13,15 @@ class Chat extends React.Component {
             emailAddress: '',
             name: '',
             message: '',
-            messages: []
+            messages: [],
+            errors: [],
         };
 
-        this.sendMessage = event => {
-            event.preventDefault();
+        this.chatWindow = React.createRef();
 
+        this.sendMessage = event => {
+            this.setState({ errors: [] })
+            event.preventDefault();
             axios({
                 method: 'post',
                 url: 'http://localhost:4000/messages',
@@ -28,17 +31,19 @@ class Chat extends React.Component {
                     date: convertDate()
                 }
             }).then(result => {
-                console.log(result)
+                if (result.status === 200) {
+                    this.socket.emit('SEND_MESSAGE', {
+                        author: this.state.name,
+                        message: this.state.message,
+                        date: convertDate()
+                    });
+                    this.setState({message: ''})
+                }
             }).catch(err => {
-              console.log(err)
+              err.response.data.errors.forEach(error => {
+                    this.setState({ errors: [...this.state.errors, error]})
+                });
             });
-
-            this.socket.emit('SEND_MESSAGE', {
-                author: this.state.name,
-                message: this.state.message,
-                date: convertDate()
-            });
-            this.setState({message: ''})
         };
 
         this.socket = io('localhost:4000');
@@ -47,7 +52,8 @@ class Chat extends React.Component {
         });
 
         const addMessage = (data) => {
-            this.setState({ messages: [...this.state.messages, data]});
+            this.setState({ messages: [...this.state.messages, data]})
+        
         };
 
         const convertDate = () => {
@@ -73,7 +79,9 @@ class Chat extends React.Component {
                 for (let i = 0; i < res.data.length; i++) {
                     this.setState({ messages: [...this.state.messages, res.data[i]]});
                 }
-            })
+            }).then(() => {
+                this.scrollToBottom();
+            });
     }
 
     setAuthorName() {
@@ -89,6 +97,14 @@ class Chat extends React.Component {
             })
     }
 
+    componentDidUpdate() {
+        this.scrollToBottom();
+    }
+
+    scrollToBottom = () => {
+        this.chatWindow.current.scrollTop = this.chatWindow.current.scrollHeight;
+    };
+
     dateToDisplay(date) {
         return date.slice(0, 14);
     }
@@ -102,7 +118,7 @@ class Chat extends React.Component {
                         <Header as='h3' dividing>
                             All chat
                         </Header>
-                    <div className="chatWindow">
+                    <div className="chatWindow" ref={this.chatWindow}>
                         {this.state.messages.map(message => {
                             return (
                                 <Comment key={message.date}>
@@ -117,7 +133,7 @@ class Chat extends React.Component {
                             )
                         })}
                     </div>
-                        <Form reply>
+                        <Form error reply>
                             <Input
                                 placeholder='Message'
                                 onChange={event => this.setState({message: event.target.value})}
@@ -127,6 +143,14 @@ class Chat extends React.Component {
                                 onClick={this.sendMessage}
                                 content='Send'
                                 primary />
+                            {this.state.errors.map(error => {
+                            return (
+                                <Message key={error.param}
+                                    error
+                                    header={error.msg}
+                                />
+                            )
+                        })}
                         </Form>
                     </Comment.Group>
                 </Container>
