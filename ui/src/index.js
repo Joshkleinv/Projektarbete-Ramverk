@@ -12,6 +12,7 @@ import Friends from "./components/Friends/Friends";
 import Registration from "./components/Registration/Registration";
 import { Home } from "./components/Home/Home";
 import Chat from "./components/Chat/Chat";
+import { PostNews } from './components/News/PostNews';
 
 const store = configureStore();
 
@@ -19,6 +20,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <PrivateRoute exact path="/" component={App}/>
+            <PrivateRoute exact path="/postnews" component={PostNews}/>
             <PrivateRoute path="/chat" component={Chat}/>
             <PrivateRoute path="/friends" component={Friends}/>
             <Route path="/home" component={Home}/>

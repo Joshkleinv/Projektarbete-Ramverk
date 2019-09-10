@@ -24,6 +24,13 @@ class Navbar extends React.Component {
                     News
                 </Menu.Item>
                 </Link>
+                <Link to="/postnews">
+                <Menu.Item
+                    name='postnews'
+                >
+                    Post News
+                </Menu.Item>
+                </Link>
                 <Link to="/friends">
                 <Menu.Item
                     name='friends'
