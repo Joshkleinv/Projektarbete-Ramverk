@@ -90,11 +90,10 @@ class Chat extends React.Component {
             params: {
                 email: emailAddress
             }
+        }).then(res => {
+            const name = res.data.firstName + ' ' + res.data.lastName;
+            this.setState({ name: name })
         })
-            .then(res => {
-                const name = res.data.firstName + ' ' + res.data.lastName;
-                this.setState({ name: name })
-            })
     }
 
     componentDidUpdate() {

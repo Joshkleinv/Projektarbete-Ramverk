@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const newsSchema = new mongoose.Schema(
+const newsModel = new mongoose.Schema(
     {
         author: {
             type: String
@@ -18,4 +18,4 @@ const newsSchema = new mongoose.Schema(
     { timestamp: true }
 );
 
-module.exports = mongoose.model('addNews', newsSchema);
+module.exports = mongoose.model('addNews', newsModel);
