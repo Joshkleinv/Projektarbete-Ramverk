@@ -12,6 +12,8 @@ const validateLogin = require('./validation/validation').validateLogin;
 const validateMessage = require('./validation/validation').validateMessage;
 const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
+const postNews = require('./controllers/news').postNews;
+
 const port = 4000;
 const mongoDB = 'mongodb://localhost/ramverkdb001';
 
@@ -26,6 +28,7 @@ mongoose.connect(mongoDB, {useNewUrlParser: true, useCreateIndex: true})
 app.post('/register', validateRegistration, register);
 app.post('/login', validateLogin, login);
 app.post('/messages', validateMessage, saveMessages);
+app.post('/news', postNews);
 app.get('/messages', getMessages);
 app.get('/user', getUser);
 

@@ -12,7 +12,7 @@ import Friends from "./components/Friends/Friends";
 import Registration from "./components/Registration/Registration";
 import { Home } from "./components/Home/Home";
 import Chat from "./components/Chat/Chat";
-import { PostNews } from './components/News/PostNews';
+import PostNews from './components/News/PostNews';
 
 const store = configureStore();
 
