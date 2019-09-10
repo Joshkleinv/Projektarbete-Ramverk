@@ -139,7 +139,7 @@ class Chat extends React.Component {
                                 onChange={event => this.setState({message: event.target.value})}
                                 value={this.state.message}
                             />
-                            <Button
+                            <Button className="ml-2"
                                 onClick={this.sendMessage}
                                 content='Send'
                                 primary />
