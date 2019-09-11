@@ -30,9 +30,11 @@ class Login extends React.Component{
                     this.props.history.replace('/')
                 }
             }).catch((err) => {
-                err.response.data.errors.forEach(error => {
-                    this.setState({ errors: [...this.state.errors, error]})
-                });
+                if (err.response.data.errors) {
+                    err.response.data.errors.forEach(error => {
+                        this.setState({ errors: [...this.state.errors, error]})
+                    });
+                } console.log(err.response.data)
             });
             setEmailAddress(this.state.emailAddress);
     }

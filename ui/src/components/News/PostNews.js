@@ -24,7 +24,7 @@ class PostNews extends React.Component {
                     date: this.convertDate()
                 }
             }).catch((err) => {
-                console.log
+                console.log(err)
             })
     }
 
