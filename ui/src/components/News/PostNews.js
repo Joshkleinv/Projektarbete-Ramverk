@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import { Button, Form, Header, Container } from 'semantic-ui-react'
+import { Button, Form, Header, Container, Message } from 'semantic-ui-react'
 import Navbar from '../Navbar/Navbar'
 import './PostNews.css'
 import { getEmailAddress } from "../../services/Auth";
@@ -10,6 +10,7 @@ class PostNews extends React.Component {
         author: '',
         text: '',
         subject: '',
+        postSuccess: false
     };
 
     handleSubmit(event) {
@@ -24,6 +25,7 @@ class PostNews extends React.Component {
                     date: this.convertDate()
                 }
             }).then((result) => {
+                this.resetFields();
                 console.log(result)
             }).catch((err) => {
                 console.log(err)
@@ -32,7 +34,6 @@ class PostNews extends React.Component {
 
     handleOnChange = event => {
         this.setState({[event.target.name]: event.target.value})
-        console.log(this.state.subject);
     };
 
     componentDidMount() {
@@ -49,6 +50,12 @@ class PostNews extends React.Component {
             const name = res.data.firstName + ' ' + res.data.lastName;
             this.setState({ author: name })
         })
+    }
+
+    resetFields = () => {
+        this.setState({ text: '' })
+        this.setState({ subject: '' })
+        this.setState({ postSuccess: true })
     }
 
     convertDate = () => {
@@ -70,7 +77,8 @@ class PostNews extends React.Component {
                 <Header as='h2'>
                 Post News!
                 </Header>
-                <Form onSubmit={event => this.handleSubmit(event)}>
+                <Form success
+                    onSubmit={event => this.handleSubmit(event)}>
                     <Form.Input                        
                         label="Subject"
                         placeholder="Subject"
@@ -88,7 +96,16 @@ class PostNews extends React.Component {
                     <Button
                         type='submit' 
                         content='Post News' 
-                        primary />
+                        primary 
+                    />
+                    {this.state.postSuccess ?
+                        <Message
+                            success
+                            header="Success!"
+                            content="The news has been posted."
+                        />
+                        :
+                    null}
                 </Form>
                 </Container>
             </React.Fragment>

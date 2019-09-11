@@ -15,7 +15,7 @@ class News extends React.Component {
   getNewsHistory() {
     axios.get('http://localhost:4000/news')
         .then(res => {
-            for (let i = 0; i < res.data.length; i++) {
+            for (let i = res.data.length -1; i >= 0; i--) {
                 this.setState({ news: [...this.state.news, res.data[i]]});
             }
         })
@@ -34,7 +34,7 @@ class News extends React.Component {
           <Feed>
             {this.state.news.map(news =>{
               return(
-              <Feed.Event>
+              <Feed.Event key={news.date}>
               <Feed.Content>
               <Feed.Extra as="h2">{news.subject}</Feed.Extra>
                 <Feed.Summary>{news.author}
