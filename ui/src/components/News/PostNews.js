@@ -23,6 +23,8 @@ class PostNews extends React.Component {
                     subject: this.state.subject,
                     date: this.convertDate()
                 }
+            }).then((result) => {
+                console.log(result)
             }).catch((err) => {
                 console.log(err)
             })
@@ -30,6 +32,7 @@ class PostNews extends React.Component {
 
     handleOnChange = event => {
         this.setState({[event.target.name]: event.target.value})
+        console.log(this.state.subject);
     };
 
     componentDidMount() {
@@ -67,7 +70,7 @@ class PostNews extends React.Component {
                 <Header as='h2'>
                 Post News!
                 </Header>
-                <Form>
+                <Form onSubmit={event => this.handleSubmit(event)}>
                     <Form.Input                        
                         label="Subject"
                         placeholder="Subject"
@@ -82,7 +85,10 @@ class PostNews extends React.Component {
                         value={this.state.text}
                         onChange={this.handleOnChange}
                     />
-                    <Button onClick={this.handleSubmit} content='Post News' primary />
+                    <Button
+                        type='submit' 
+                        content='Post News' 
+                        primary />
                 </Form>
                 </Container>
             </React.Fragment>

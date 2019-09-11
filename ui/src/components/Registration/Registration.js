@@ -47,7 +47,11 @@ class Registration extends React.Component {
         return (
             <div className="leaf-bg">
                 <Container className="pt-2">
-                    <Form error className="container-dark" onSubmit={event => this.handleSubmit(event)}>
+                    <Form 
+                        onSubmit={event => this.handleSubmit(event)}
+                        error 
+                        className="container-dark"
+                        >
                         <Header className="color-white" as="h2">
                             Create new account
                         </Header>
