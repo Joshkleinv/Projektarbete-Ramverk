@@ -12,7 +12,15 @@ const postNews = (req, res) => {
         res.sendStatus(200)
     })
 };
+getNews = (req, res) => {
+    newsModel.find({}, (err, news) => {
+        if (err)
+            res.sendStatus(500);
+        res.send(news)
+    })
+  };
 
 module.exports = {
-    postNews: postNews
+    postNews: postNews,
+    getNews: getNews
 };

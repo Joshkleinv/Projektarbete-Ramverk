@@ -13,6 +13,7 @@ const validateMessage = require('./validation/validation').validateMessage;
 const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
 const postNews = require('./controllers/news').postNews;
+const getNews = require('./controllers/news').getNews
 
 const port = 4000;
 const mongoDB = 'mongodb://localhost/ramverkdb001';
@@ -31,6 +32,7 @@ app.post('/messages', validateMessage, saveMessages);
 app.post('/news', postNews);
 app.get('/messages', getMessages);
 app.get('/user', getUser);
+app.get('/news', getNews);
 
 server = app.listen(port, function(){
     console.log(`Server is running on Port: ${port}`);

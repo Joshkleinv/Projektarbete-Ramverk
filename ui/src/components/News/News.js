@@ -1,30 +1,54 @@
 import React from 'react';
 import {Container, Feed, Header} from 'semantic-ui-react'
 import Navbar from "../Navbar/Navbar";
+import axios from 'axios';
 
-export const News = () => {
-  return (
-    <React.Fragment>
-      <Navbar />
-      <Container className="container-transparent">
-        <Header as="h2">Latest news!</Header>
-        <Feed>
-        <Feed.Event>
-          <Feed.Content>
-            <Feed.Summary>
-              Joe Henderson posted on his page
-              <Feed.Date>3 days ago</Feed.Date>
-            </Feed.Summary>
-            <Feed.Extra text>
-              Ours is a life of constant reruns. We're always circling back to where
-              we'd we started, then starting all over again. Even if we don't run
-              extra laps that day, we surely will come back for more of the same
-              another day soon.
-            </Feed.Extra>
-          </Feed.Content>
-        </Feed.Event>
-      </Feed>
-      </Container>
-  </React.Fragment>
-  );
+class News extends React.Component {
+ state = {
+    news: []
+  }
+  
+  componentDidMount(){
+    this.getNewsHistory();
+  }
+
+  getNewsHistory() {
+    axios.get('http://localhost:4000/news')
+        .then(res => {
+            for (let i = 0; i < res.data.length; i++) {
+                this.setState({ news: [...this.state.news, res.data[i]]});
+            }
+        })
+  }
+
+  dateToDisplay(date) {
+    return date.slice(0, 14);
+  }
+
+  render(){
+    return (
+      <React.Fragment>
+        <Navbar />
+        <Container className="container-transparent">
+          <Header as="h2">Latest news!</Header>
+          <Feed>
+            {this.state.news.map(news =>{
+              return(
+              <Feed.Event>
+              <Feed.Content>
+              <Feed.Extra as="h2">{news.subject}</Feed.Extra>
+                <Feed.Summary>{news.author}
+                  <Feed.Date><div>{this.dateToDisplay(news.date)}</div></Feed.Date>
+                </Feed.Summary>
+                <Feed.Extra text>{news.text}</Feed.Extra>
+              </Feed.Content>
+              </Feed.Event>
+              )
+            })}
+        </Feed>
+        </Container>
+    </React.Fragment>
+    )
+  }
 };
+export default News;
