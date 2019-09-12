@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios';
 import { Button, Form, Header, Container, Message } from 'semantic-ui-react'
-import Navbar from '../Navbar/Navbar'
 import './PostNews.css'
 import { getEmailAddress } from "../../services/Auth";
 
@@ -14,6 +13,7 @@ class PostNews extends React.Component {
     };
 
     handleSubmit(event) {
+        this.setState({ postSuccess: false })
         event.preventDefault();
             axios({
                 method: 'post',
@@ -25,7 +25,7 @@ class PostNews extends React.Component {
                     date: this.convertDate()
                 }
             }).then((result) => {
-                this.resetFields();
+                this.onPostSuccess();
                 console.log(result)
             }).catch((err) => {
                 console.log(err)
@@ -52,7 +52,7 @@ class PostNews extends React.Component {
         })
     }
 
-    resetFields = () => {
+    onPostSuccess = () => {
         this.setState({ text: '' })
         this.setState({ subject: '' })
         this.setState({ postSuccess: true })
@@ -72,14 +72,13 @@ class PostNews extends React.Component {
     render(){
         return(
             <React.Fragment>
-                <Navbar />
                 <Container className="container-transparent">
                 <Header as='h2'>
                 Post News!
                 </Header>
                 <Form success
                     onSubmit={event => this.handleSubmit(event)}>
-                    <Form.Input                        
+                    <Form.Input                   
                         label="Subject"
                         placeholder="Subject"
                         name="subject"

@@ -3,7 +3,6 @@ import io from "socket.io-client";
 import axios from 'axios';
 import {Button, Comment, Container, Form, Header, Input, Message } from 'semantic-ui-react';
 import './Chat.css'
-import Navbar from "../Navbar/Navbar";
 import {getEmailAddress} from "../../services/Auth";
 
 class Chat extends React.Component {
@@ -111,7 +110,6 @@ class Chat extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Navbar />
                 <Container>
                     <Comment.Group className="container-transparent">
                         <Header as='h3' dividing>

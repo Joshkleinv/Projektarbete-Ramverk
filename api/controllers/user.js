@@ -2,14 +2,13 @@ const userModel = require('../models/user');
 const jwt = require('jsonwebtoken');
 const { validationResult } = require('express-validator');
 
-const jwtSecret = 'asimplesecret';
 function createJWT(user) {
-    return jwt.sign({ id: user.id }, jwtSecret);
+    return jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY );
 }
 
 const verifyJWT = token => {
     new Promise((resolve, reject) => {
-        jwt.verify(token, jwtSecret, (err, payload) => {
+        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, payload) => {
             if (err) return reject(err);
             resolve(payload)
         })

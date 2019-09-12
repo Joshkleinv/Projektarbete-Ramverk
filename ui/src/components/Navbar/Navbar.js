@@ -10,8 +10,8 @@ class Navbar extends React.Component {
 
     handleLogout = () => {
         logout();
-        removeEmailAddress();
-        window.location.reload();
+        removeEmailAddress();                
+        this.props.history.replace('/')
     };
 
     render() {
@@ -24,11 +24,11 @@ class Navbar extends React.Component {
                     News
                 </Menu.Item>
                 </Link>
-                <Link to="/friends">
+                <Link to="/users">
                 <Menu.Item
-                    name='friends'
+                    name='users'
                 >
-                    Friends
+                    Users
                 </Menu.Item>
                 </Link>
                 <Link to="/chat">

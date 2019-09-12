@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const socket = require('socket.io');
+const envKeys = require('dotenv').config();
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
 const getUser = require('./controllers/user').getUser;
@@ -14,7 +15,6 @@ const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
 const postNews = require('./controllers/news').postNews;
 const getNews = require('./controllers/news').getNews
-
 const port = 4000;
 const mongoDB = 'mongodb://localhost/ramverkdb001';
 

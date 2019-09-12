@@ -1,6 +1,5 @@
 import React from 'react';
 import {Container, Feed, Header} from 'semantic-ui-react'
-import Navbar from "../Navbar/Navbar";
 import axios from 'axios';
 
 class News extends React.Component {
@@ -28,7 +27,6 @@ class News extends React.Component {
   render(){
     return (
       <React.Fragment>
-        <Navbar />
         <Container className="container-transparent">
           <Header as="h2">Latest news!</Header>
           <Feed>
