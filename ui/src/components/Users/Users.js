@@ -1,6 +1,5 @@
 import React from 'react';
 import './Users.css';
-import Navbar from "../Navbar/Navbar";
 
 class Users extends React.Component {
     render() {

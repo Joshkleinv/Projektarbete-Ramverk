@@ -1,9 +1,9 @@
 import React from 'react';
 import io from "socket.io-client";
 import axios from 'axios';
-import {Button, Comment, Container, Form, Header, Input, Message } from 'semantic-ui-react';
+import { Button, Comment, Container, Form, Header, Input, Message } from 'semantic-ui-react';
 import './Chat.css'
-import {getEmailAddress} from "../../services/Auth";
+import { setAuthorName } from '../../services/Requests'
 
 class Chat extends React.Component {
     constructor(props) {
@@ -69,7 +69,7 @@ class Chat extends React.Component {
 
     componentDidMount() {
         this.getChatHistory();
-        this.setAuthorName();
+        this.setNameOfAuthor();
     }
 
     getChatHistory() {
@@ -83,13 +83,9 @@ class Chat extends React.Component {
             });
     }
 
-    setAuthorName() {
-        const emailAddress = getEmailAddress();
-        axios.get('http://localhost:4000/user', {
-            params: {
-                email: emailAddress
-            }
-        }).then(res => {
+    setNameOfAuthor = () => {
+        setAuthorName()
+        .then(res => {
             const name = res.data.firstName + ' ' + res.data.lastName;
             this.setState({ name: name })
         })

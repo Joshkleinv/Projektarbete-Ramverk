@@ -2,7 +2,7 @@ import React from 'react'
 import axios from 'axios';
 import { Button, Form, Header, Container, Message } from 'semantic-ui-react'
 import './PostNews.css'
-import { getEmailAddress } from "../../services/Auth";
+import { setAuthorName } from '../../services/Requests'
 
 class PostNews extends React.Component {
     state = {
@@ -37,16 +37,12 @@ class PostNews extends React.Component {
     };
 
     componentDidMount() {
-        this.setAuthorName();
+        this.setNameOfAuthor();    
     }
 
-    setAuthorName = () => {
-        const emailAddress = getEmailAddress();
-        axios.get('http://localhost:4000/user', {
-            params: {
-                email: emailAddress
-            }
-        }).then(res => {
+    setNameOfAuthor = () => {
+        setAuthorName()
+        .then(res => {
             const name = res.data.firstName + ' ' + res.data.lastName;
             this.setState({ author: name })
         })
