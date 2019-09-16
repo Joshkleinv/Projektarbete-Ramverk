@@ -12,6 +12,7 @@ const postNews = (req, res) => {
         res.sendStatus(200)
     })
 };
+
 getNews = (req, res) => {
     newsModel.find({}, (err, news) => {
         if (err)

@@ -72,7 +72,7 @@ const isAuthorized = async (req, res, next) => {
     next();
 };
 
-const getUser = (req, res ) => {
+const getUser = (req, res) => {
     userModel.findOne({ emailAddress: req.query.email }, (err, user) => {
         if (err) {
             res.sendStatus(500);
@@ -85,9 +85,20 @@ const getUser = (req, res ) => {
     })
 };
 
+const getUsers = (req, res) => {
+    userModel.find({}, (err, users) => {
+        if (err) {
+            res.sendStatus(500).send({ message: 'Problem with finding users'});
+        } else {
+            res.send(users)
+        }
+    });
+}
+
 module.exports = {
     register: register,
     login: login,
     isAuthorized: isAuthorized,
-    getUser: getUser
+    getUser: getUser,
+    getUsers: getUsers
 };

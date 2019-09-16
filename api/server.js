@@ -8,6 +8,7 @@ const envKeys = require('dotenv').config();
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
 const getUser = require('./controllers/user').getUser;
+const getUsers = require('./controllers/user').getUsers;
 const validateRegistration = require('./validation/validation').validateRegistration;
 const validateLogin = require('./validation/validation').validateLogin;
 const validateMessage = require('./validation/validation').validateMessage;
@@ -32,6 +33,7 @@ app.post('/messages', validateMessage, saveMessages);
 app.post('/news', postNews);
 app.get('/messages', getMessages);
 app.get('/user', getUser);
+app.get('/users', getUsers);
 app.get('/news', getNews);
 
 server = app.listen(port, function(){
