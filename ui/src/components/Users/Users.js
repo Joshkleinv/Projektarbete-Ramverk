@@ -13,11 +13,6 @@ class Users extends React.Component {
     }
 
     getUsers() {
-        const User = {
-            email: '',
-            firstName: '',
-            lastName: ''
-        }
         axios.get('http://localhost:4000/users')
         .then(res => {
             for (let i = 0; i < res.data.length; i++) {
@@ -28,7 +23,6 @@ class Users extends React.Component {
                     lastName: res.data[i].lastName
                 }
                 this.setState({ users: [...this.state.users, user ]})
-                console.log(this.state.users)
             }
         })
     }

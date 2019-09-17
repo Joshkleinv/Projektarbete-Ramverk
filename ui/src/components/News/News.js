@@ -21,7 +21,7 @@ class News extends React.Component {
   }
 
   dateToDisplay(date) {
-    return date.slice(0, 14);
+    return date.slice(0, 15);
   }
 
   render(){

@@ -52,7 +52,6 @@ class Chat extends React.Component {
 
         const addMessage = (data) => {
             this.setState({ messages: [...this.state.messages, data]})
-        
         };
 
         const convertDate = () => {
@@ -100,7 +99,7 @@ class Chat extends React.Component {
     };
 
     dateToDisplay(date) {
-        return date.slice(0, 14);
+        return date.slice(0, 15);
     }
 
     render() {

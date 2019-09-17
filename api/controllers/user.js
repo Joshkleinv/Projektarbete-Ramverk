@@ -63,12 +63,12 @@ const isAuthorized = async (req, res, next) => {
     } catch (e) {
         return res.status(500).end();
     }
-
     const user = await userModel.findById(payload.id).exec();
     if (!user) {
         return res.status(500).end();
     }
     req.user = user;
+    res.send(user)
     next();
 };
 

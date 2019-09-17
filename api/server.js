@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 const socket = require('socket.io');
 const envKeys = require('dotenv').config();
+const isAuthorized = require('./controllers/user').isAuthorized;
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
 const getUser = require('./controllers/user').getUser;
@@ -43,7 +44,6 @@ server = app.listen(port, function(){
 io = socket(server);
 
 io.on('connection', (socket) => {
-    console.log(socket.id);
     socket.on('SEND_MESSAGE', (data) => {
         io.emit('RECEIVE_MESSAGE', data);
     })

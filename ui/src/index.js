@@ -20,7 +20,7 @@ ReactDOM.render(
     <Provider store={store}>
         <BrowserRouter>
             <PrivateRoute exact path="/" component={App}/>
-            <PrivateRoute exact path="/postnews" component={PostNews}/>
+            <PrivateRoute path="/postnews" component={PostNews}/>
             <PrivateRoute path="/chat" component={Chat}/>
             <PrivateRoute path="/users" component={Users}/>
             <Route path="/home" component={Home}/>
