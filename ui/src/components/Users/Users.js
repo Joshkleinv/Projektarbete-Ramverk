@@ -32,7 +32,6 @@ class Users extends React.Component {
             <React.Fragment>
                 <Container>
                 {this.state.users.map(user => {
-                    console.log(user)
                     return (
                         <Card>
                         <Card.Content>
