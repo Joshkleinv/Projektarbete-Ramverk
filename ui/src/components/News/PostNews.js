@@ -70,19 +70,20 @@ class PostNews extends React.Component {
             <React.Fragment>
                 <Container className="container-transparent">
                 <Header as='h2'>
-                Post News!
+                Post News
                 </Header>
+                <p>
+                    Please post something relevant.
+                </p>
                 <Form success
                     onSubmit={event => this.handleSubmit(event)}>
-                    <Form.Input                   
-                        label="Subject"
+                    <Form.Input          
                         placeholder="Subject"
                         name="subject"
                         value={this.state.subject}
                         onChange={this.handleOnChange}
                     />
-                    <Form.TextArea                    
-                        label="Text"
+                    <Form.TextArea     
                         placeholder="News text"
                         name="text"
                         value={this.state.text}

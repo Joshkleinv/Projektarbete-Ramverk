@@ -28,7 +28,10 @@ class News extends React.Component {
     return (
       <React.Fragment>
         <Container className="container-transparent">
-          <Header as="h2">Latest news!</Header>
+          <Header as="h2">Latest news</Header>
+          <p>
+          Latest news, hopefully containing something relevant. Probably not.
+          </p>
           <Feed>
             {this.state.news.map(news =>{
               return(

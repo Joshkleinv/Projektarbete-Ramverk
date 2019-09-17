@@ -1,5 +1,5 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react'
+import { Menu, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { logout } from '../../services/Auth'
 import { removeEmailAddress } from '../../services/Auth'
@@ -21,6 +21,9 @@ class Navbar extends React.Component {
                 <Menu.Item
                     name='news'
                 >
+                    <Icon
+                    name="newspaper"
+                    />
                     News
                 </Menu.Item>
                 </Link>
@@ -28,6 +31,9 @@ class Navbar extends React.Component {
                 <Menu.Item
                     name='users'
                 >
+                    <Icon 
+                    name="address book"
+                    />
                     Users
                 </Menu.Item>
                 </Link>
@@ -35,6 +41,9 @@ class Navbar extends React.Component {
                 <Menu.Item
                     name='chat'
                 >
+                    <Icon
+                    name="comments"
+                    />
                     Chat
                 </Menu.Item>
                 </Link>                
@@ -42,6 +51,9 @@ class Navbar extends React.Component {
                 <Menu.Item
                     name='postnews'
                 >
+                    <Icon
+                    name="send"
+                    />
                     Post News
                 </Menu.Item>
                 </Link>
@@ -50,6 +62,9 @@ class Navbar extends React.Component {
                     name='logout'
                     onClick={this.handleLogout}
                 >
+                    <Icon
+                    name="log out"
+                    />
                     Logout
                 </Menu.Item>
                 </Menu.Menu>

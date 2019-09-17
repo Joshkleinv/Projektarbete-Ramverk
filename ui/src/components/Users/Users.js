@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import { Card, Container } from 'semantic-ui-react';
+import { Card, Container, Header } from 'semantic-ui-react';
 import './Users.css';
 
 class Users extends React.Component {
@@ -30,7 +30,13 @@ class Users extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Container>
+                <Container className="container-transparent">
+                <Header as='h2'>
+                    User information
+                </Header>
+                <p>
+                    All our real users togheter with their totally legit contact information.
+                </p>
                 {this.state.users.map(user => {
                     return (
                         <Card>

@@ -1,7 +1,7 @@
 import React from 'react';
 import io from "socket.io-client";
 import axios from 'axios';
-import { Button, Comment, Container, Form, Header, Input, Message } from 'semantic-ui-react';
+import { Button, Comment, Container, Form, Header, Input, Message, Divider } from 'semantic-ui-react';
 import './Chat.css'
 import { setAuthorName } from '../../services/Requests'
 
@@ -107,9 +107,13 @@ class Chat extends React.Component {
             <React.Fragment>
                 <Container>
                     <Comment.Group className="container-transparent">
-                        <Header as='h3' dividing>
+                        <Header as='h2'>
                             All chat
                         </Header>
+                        <p>
+                            A chat for all of us to gossip about the latest after work.
+                        </p>
+                    <Divider />
                     <div className="chatWindow" ref={this.chatWindow}>
                         {this.state.messages.map(message => {
                             return (
