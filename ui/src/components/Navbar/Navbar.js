@@ -3,16 +3,32 @@ import { Menu, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { logout } from '../../services/Auth'
 import { removeEmailAddress } from '../../services/Auth'
+import { setAuthorName } from '../../services/Requests'
 import './Navbar.css'
 
 class Navbar extends React.Component {
-    state = {};
+    state = {
+        author: ''
+    };
+
 
     handleLogout = () => {
         logout();
         removeEmailAddress();                
         this.props.history.replace('/')
     };
+
+    componentDidMount() {
+        this.setNameOfAuthor();    
+    }
+
+    setNameOfAuthor = () => {
+        setAuthorName()
+        .then(res => {
+            const name = res.data.firstName + ' ' + res.data.lastName;
+            this.setState({ author: name })
+        })
+    }
 
     render() {
         return (
@@ -58,6 +74,14 @@ class Navbar extends React.Component {
                 </Menu.Item>
                 </Link>
                 <Menu.Menu position='right'>
+                <Menu.Item
+                    name=''
+                >
+                    <Icon
+                    name="user"
+                    />
+                    {this.state.author}
+                </Menu.Item>
                 <Menu.Item
                     name='logout'
                     onClick={this.handleLogout}
