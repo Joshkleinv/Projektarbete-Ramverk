@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Button, Form, Header, Container, Message } from 'semantic-ui-react'
 import './PostNews.css'
 import { setAuthorName } from '../../services/Requests'
+import { convertDate } from "../../services/ConvertDate";
 
 class PostNews extends React.Component {
     state = {
@@ -13,7 +14,7 @@ class PostNews extends React.Component {
     };
 
     handleSubmit(event) {
-        this.setState({ postSuccess: false })
+        this.setState({ postSuccess: false });
         event.preventDefault();
             axios({
                 method: 'post',
@@ -22,7 +23,7 @@ class PostNews extends React.Component {
                     author: this.state.author,
                     text: this.state.text,
                     subject: this.state.subject,
-                    date: this.convertDate()
+                    date: convertDate()
                 }
             }).then((result) => {
                 this.onPostSuccess();
@@ -46,23 +47,12 @@ class PostNews extends React.Component {
             const name = res.data.firstName + ' ' + res.data.lastName;
             this.setState({ author: name })
         })
-    }
+    };
 
     onPostSuccess = () => {
-        this.setState({ text: '' })
-        this.setState({ subject: '' })
+        this.setState({ text: '' });
+        this.setState({ subject: '' });
         this.setState({ postSuccess: true })
-    }
-
-    convertDate = () => {
-        let current_datetime = new Date();
-        return current_datetime.getFullYear()
-            + "-" + (current_datetime.getMonth() + 1)
-            + "-" + current_datetime.getDate()
-            + " " + current_datetime.getHours()
-            + ":" + current_datetime.getMinutes()
-            + ":" + current_datetime.getSeconds()
-            + ":" + current_datetime.getMilliseconds();
     };
     
     render(){

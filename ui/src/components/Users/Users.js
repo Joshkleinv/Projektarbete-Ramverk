@@ -39,7 +39,7 @@ class Users extends React.Component {
                 </p>
                 {this.state.users.map(user => {
                     return (
-                        <Card>
+                        <Card key={user.email}>
                         <Card.Content>
                           <Card.Header content={user.firstName + ' ' + user.lastName} />
                           <Card.Meta content={user.email} />

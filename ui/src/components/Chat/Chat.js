@@ -3,7 +3,9 @@ import io from "socket.io-client";
 import axios from 'axios';
 import { Button, Comment, Container, Form, Header, Input, Message, Divider } from 'semantic-ui-react';
 import './Chat.css'
-import { setAuthorName } from '../../services/Requests'
+import { setAuthorName } from '../../services/Requests';
+import { convertDate } from "../../services/ConvertDate";
+
 
 class Chat extends React.Component {
     constructor(props) {
@@ -19,7 +21,7 @@ class Chat extends React.Component {
         this.chatWindow = React.createRef();
 
         this.sendMessage = event => {
-            this.setState({ errors: [] })
+            this.setState({ errors: [] });
             event.preventDefault();
             axios({
                 method: 'post',
@@ -52,17 +54,6 @@ class Chat extends React.Component {
 
         const addMessage = (data) => {
             this.setState({ messages: [...this.state.messages, data]})
-        };
-
-        const convertDate = () => {
-            let current_datetime = new Date();
-            return current_datetime.getFullYear()
-                + "-" + (current_datetime.getMonth() + 1)
-                + "-" + current_datetime.getDate()
-                + " " + current_datetime.getHours()
-                + ":" + current_datetime.getMinutes()
-                + ":" + current_datetime.getSeconds()
-                + ":" + current_datetime.getMilliseconds();
         };
     }
 
