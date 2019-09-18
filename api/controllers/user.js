@@ -6,17 +6,6 @@ function createJWT(user) {
     return jwt.sign({ id: user.id }, process.env.JWT_SECRET_KEY );
 }
 
-const verifyJWT = token => {
-    new Promise((resolve, reject) => {
-        jwt.verify(token, process.env.JWT_SECRET_KEY, (err, payload) => {
-            if (err) return reject(err);
-            resolve(payload)
-        })
-    }).catch(err => {
-        console.log(err)
-    });
-};
-
 const register = (req, res) => {
     const errors = validationResult(req);
     
@@ -56,23 +45,25 @@ const login = async (req, res) => {
     }
 };
 
-const isAuthorized = async (req, res, next) => {
+const isAuthorized = async (req, res) => {
     const token = req.headers.authorization;
     let payload;
 
     try {
-        payload = await verifyJWT(token);
+        payload = await jwt.verify(token, process.env.JWT_SECRET_KEY);
     } catch (e) {
         return res.status(500).send({ Error: 'Could not verify jwt token'});
     }
     const user = await userModel.findById(payload.id).exec();
     if (!user) {
         return res.status(500).send({ Error: 'No user found with this id'});
+    } else {
+        res.send(user)
     }
-    req.user = user;
-    next();
 };
 
+//This is no longer used as we instead fetches the user from the function above
+/*
 const getUser = (req, res) => {
     userModel.findOne({ emailAddress: req.query.email }, (err, user) => {
         if (err) {
@@ -85,6 +76,7 @@ const getUser = (req, res) => {
         }
     })
 };
+*/
 
 const getUsers = (req, res) => {
     userModel.find({}, (err, users) => {
@@ -100,6 +92,6 @@ module.exports = {
     register: register,
     login: login,
     isAuthorized: isAuthorized,
-    getUser: getUser,
+    //getUser: getUser,
     getUsers: getUsers
 };

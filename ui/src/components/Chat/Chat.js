@@ -6,7 +6,6 @@ import './Chat.css'
 import { setAuthorName } from '../../services/Requests';
 import { convertDate } from "../../services/ConvertDate";
 
-
 class Chat extends React.Component {
     constructor(props) {
         super(props);
@@ -79,7 +78,7 @@ class Chat extends React.Component {
             const name = res.data.firstName + ' ' + res.data.lastName;
             this.setState({ name: name })
         })
-    }
+    };
 
     componentDidUpdate() {
         this.scrollToBottom();

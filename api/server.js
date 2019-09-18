@@ -7,7 +7,7 @@ const socket = require('socket.io');
 const envKeys = require('dotenv').config();
 const register = require('./controllers/user').register;
 const login = require('./controllers/user').login;
-const getUser = require('./controllers/user').getUser;
+const isAuthorized = require('./controllers/user').isAuthorized;
 const getUsers = require('./controllers/user').getUsers;
 const validateRegistration = require('./validation/validation').validateRegistration;
 const validateLogin = require('./validation/validation').validateLogin;
@@ -15,7 +15,7 @@ const validateMessage = require('./validation/validation').validateMessage;
 const saveMessages = require('./controllers/message').saveMessages;
 const getMessages = require('./controllers/message').getMessages;
 const postNews = require('./controllers/news').postNews;
-const getNews = require('./controllers/news').getNews
+const getNews = require('./controllers/news').getNews;
 const port = 4000;
 const mongoDB = 'mongodb://localhost/ramverkdb001';
 
@@ -31,8 +31,9 @@ app.post('/register', validateRegistration, register);
 app.post('/login', validateLogin, login);
 app.post('/messages', validateMessage, saveMessages);
 app.post('/news', postNews);
+app.get('/auth', isAuthorized);
 app.get('/messages', getMessages);
-app.get('/user', getUser);
+app.get('/user', isAuthorized);
 app.get('/users', getUsers);
 app.get('/news', getNews);
 

@@ -1,11 +1,11 @@
 import axios from 'axios';
-import { getEmailAddress } from "./Auth";
+import { getToken } from "./Auth";
 
 export const setAuthorName = () => {
-    const emailAddress = getEmailAddress();
+    const token = getToken();
     return axios.get('http://localhost:4000/user', {
-        params: {
-            email: emailAddress
+        headers: {
+            authorization: token
         }
     })
-}
+};

@@ -5,7 +5,6 @@ import {Container, Divider, Form, Header, Message } from "semantic-ui-react";
 import './Login.css';
 import '../App.css';
 import { setToken } from "../../services/Auth";
-import { setEmailAddress } from "../../services/Auth";
 
 class Login extends React.Component{
     state = {
@@ -36,7 +35,6 @@ class Login extends React.Component{
                     });
                 } console.log(err.response.data)
             });
-            setEmailAddress(this.state.emailAddress);
     }
 
     handleOnChange = event => {
