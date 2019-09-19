@@ -2,7 +2,6 @@ import React from 'react';
 import { Menu, Icon } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import { logout } from '../../services/Auth'
-import { removeEmailAddress } from '../../services/Auth'
 import { setAuthorName } from '../../services/Requests'
 import './Navbar.css'
 
@@ -14,7 +13,6 @@ class Navbar extends React.Component {
 
     handleLogout = () => {
         logout();
-        removeEmailAddress();                
         this.props.history.replace('/')
     };
 
