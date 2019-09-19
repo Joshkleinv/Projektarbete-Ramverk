@@ -13,7 +13,3 @@ export const isAuthorized = () => {
 export const logout = () => {
     localStorage.removeItem('auth_token')
 };
-
-export const removeEmailAddress = () => {
-  localStorage.removeItem('emailAddress')
-};
